@@ -6,21 +6,18 @@ import BambuserPlayer from './BambuserPlayer'
 class NgagerBambuserPlayer extends PureComponent {
   constructor(props) {
     super(props)
-    // this.handleOnReceived = this.handleOnReceived.bind(this)
+    this.handleOnEnded = this.handleOnEnded.bind(this)
     this.styles = {
       container: Object.assign({ width: '100%', height: '100% ', display: 'flex', alignItems: 'center', justifyContent: 'center' }, props.style)
     }
   }
 
   componentDidMount() {
-    const { broadcastId, src, autoplay } = this.props
+    const { src, autoplay } = this.props
     const player = BambuserPlayer.create(this.player, src, {
       noFullscreen: true // Do not allow fullscreen
     })
-    player.addEventListener('ended', function() {
-      // console.log('player ended')
-      this.props.onEnded(broadcastId)
-    })
+    player.addEventListener('ended', this.handleOnEnded)
     player.controls = true
 
     // player.autoplay = aut
@@ -28,6 +25,10 @@ class NgagerBambuserPlayer extends PureComponent {
     if (autoplay) {
       player.play()
     }
+  }
+
+  handleOnEnded() {
+    this.props.onEnded(this.props.broadcastId)
   }
 
   render() {

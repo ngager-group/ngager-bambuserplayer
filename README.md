@@ -1,6 +1,6 @@
 # ngager-bambuserplayer
 
-> PDF Reader component using PDF.js library
+> ReactJS Bambuser Player 
 
 [![NPM](https://img.shields.io/npm/v/ngager-bambuserplayer.svg)](https://www.npmjs.com/package/ngager-bambuserplayer) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
