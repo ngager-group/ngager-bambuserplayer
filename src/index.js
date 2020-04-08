@@ -1,15 +1,18 @@
 /* eslint no-constant-condition: 0 */
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
 import BambuserPlayer from './BambuserPlayer'
 
 class NgagerBambuserPlayer extends PureComponent {
   constructor(props) {
     super(props)
-    this.handleOnEnded = this.handleOnEnded.bind(this)
-    this.styles = {
-      container: Object.assign({ width: '100%', height: '100% ', display: 'flex', alignItems: 'center', justifyContent: 'center' }, props.style)
+    this.state = {
+      isLoading: true,
+      isLive: false,
+      currentViewer: 0
     }
+    this.handleOnEnded = this.handleOnEnded.bind(this)
   }
 
   componentDidMount() {
@@ -18,6 +21,11 @@ class NgagerBambuserPlayer extends PureComponent {
       noFullscreen: true // Do not allow fullscreen
     })
     player.addEventListener('ended', this.handleOnEnded)
+    player.addEventListener('viewers', () => {
+      console.log('player.viewers', player.viewers)
+      this.setState({ currentViewer: player.viewers.current })
+    })
+    // console.log(player.isLive)
     player.controls = true
 
     // player.autoplay = aut
@@ -25,6 +33,9 @@ class NgagerBambuserPlayer extends PureComponent {
     if (autoplay) {
       player.play()
     }
+
+    // this.setState({ isLive: player.isLive })
+    this.setState({ isLoading: false, isLive: player.isLive, currentViewer: player.viewers.current })
   }
 
   handleOnEnded() {
@@ -35,18 +46,72 @@ class NgagerBambuserPlayer extends PureComponent {
     // const { host, path } = this.props.viewer
     // console.log(this.props.resourceUri)
     return (
-      <div
+      <Container
         className={this.props.className}
-        style={this.styles.container}
-        ref={el => {
-          this.player = el || this.player
-        }}
+        style={this.props.style}
       >
-        Loading...
-      </div>
+        {this.state.isLoading && <span>Loading...</span>}
+        <div className='player' ref={el => { this.player = el || this.player }} />
+        <div className='header'>
+          {this.state.isLive && <span className='live'>LIVE</span>}
+          {this.state.currentViewer > 0 && (
+            <div className='viewer'>
+              <i className='fa fa-eye' aria-hidden='true' />
+              <span>{this.state.currentViewer}</span>
+            </div>
+          )}
+        </div>
+      </Container>
     )
   }
 }
+
+const Container = styled.div`
+width: 100%;
+height: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+position: relative;
+
+> div.player {
+  width: 100%;
+  height: 100%;
+}
+
+> div.header {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  flex-direction: row;
+
+  > span.live {
+    background-color: red;
+    color: #fff;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 3px;
+  }
+
+  .viewer {
+    margin-left: 10px;
+    color: #ffffff;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px;
+    background-color: #222222;
+
+    .fa {
+      font-size: 20px;
+      margin-right: 10px;
+      margin-left: 5px;
+    }
+  }
+}
+`
 
 NgagerBambuserPlayer.propTypes = {
   className: PropTypes.string,
