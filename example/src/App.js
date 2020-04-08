@@ -11,7 +11,7 @@ export default class App extends PureComponent {
   render () {
     return (
         <Bambuserplayer
-          src="https://cdn.bambuser.net/broadcasts/701b6318-ebc4-47a9-83ae-45cf80a28bbc?da_signature_method=HMAC-SHA256&da_id=9e1b1e83-657d-7c83-b8e7-0b782ac9543a&da_timestamp=1586259204&da_static=1&da_ttl=0&da_signature=f2e40ed65b2fee9fbbd286094879e20895f4e0c64fae78d4ee1c40b9ef0e052e"
+          src="https://cdn.bambuser.net/broadcasts/996dfc93-280d-4825-8a81-37215c5e0605?da_signature_method=HMAC-SHA256&da_id=9e1b1e83-657d-7c83-b8e7-0b782ac9543a&da_timestamp=1586342546&da_static=1&da_ttl=0&da_signature=e063b19dfe841143d0d0237fbee3c030cc69b916909012c46229131720f2618c"
           broadcastId="123"
           autoplay
           onEnded={() => console.log('Ended')}

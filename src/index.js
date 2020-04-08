@@ -22,10 +22,9 @@ class NgagerBambuserPlayer extends PureComponent {
     })
     player.addEventListener('ended', this.handleOnEnded)
     player.addEventListener('viewers', () => {
-      console.log('player.viewers', player.viewers)
-      this.setState({ currentViewer: player.viewers.current })
+      // console.log('player.viewers', player.viewers)
+      this.setState({ currentViewer: player.viewers.current, isLive: player.isLive })
     })
-    // console.log(player.isLive)
     player.controls = true
 
     // player.autoplay = aut
@@ -39,6 +38,7 @@ class NgagerBambuserPlayer extends PureComponent {
   }
 
   handleOnEnded() {
+    this.setState({ isLive: false, currentViewer: 0 })
     this.props.onEnded(this.props.broadcastId)
   }
 
