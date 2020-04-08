@@ -1,13 +1,1 @@
 /* add css styles here (optional) */
-
-span.live {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background-color: red;
-  color: #fff;
-  padding: 5px;
-  padding-left: 10px;
-  padding-right: 10px;
-  border-radius: 3px;
-}
